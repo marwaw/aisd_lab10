@@ -3,12 +3,12 @@ public class Node implements Comparable<Node>{
 	private char symbol;
 	Node left;
 	Node right;
-	int num;
+//	int num;
 	
 	public Node(int v, char s){
 		value = v;
 		symbol = s;
-		num = 0;
+//		num = 0;
 	}
 	
 	public Node(int v, Node l, Node r){
@@ -17,10 +17,10 @@ public class Node implements Comparable<Node>{
 		right = r;
 	}
 	
-	public void setNum(int n){
-		num = n;
-	}
-	
+//	public void setNum(int n){
+//		num = n;
+//	}
+//	
 	public void addFreq(){
 		value++;
 	}
@@ -34,18 +34,14 @@ public class Node implements Comparable<Node>{
 	}
 	
 	public String toString(){
-		return "Znak: " + symbol + " waga: " + value + " numer porz¹dkowy " + num;
-	}
-	
-	public void toZero(){
-		num = 0;
+		return "Znak: " + symbol + " waga: " + value /*+ " numer porz¹dkowy " + num*/;
 	}
 
 	@Override
 	public int compareTo(Node arg0) {
 		// TODO Auto-generated method stub
 		int com = ((Integer)value).compareTo((Integer)arg0.sum());
-		if ( com == 0) return ((Integer)num).compareTo((Integer)arg0.num) ;
+//		if ( com == 0) return ((Integer)num).compareTo((Integer)arg0.num) ;
 		return com;
 //		int com;
 //		if (this.value < arg0.sum()) com = -1;

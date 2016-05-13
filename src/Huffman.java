@@ -3,94 +3,80 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class Huffman {
-	ArrayList<Node> nodes;
+	PriorityQueue nodes;
 	
 	
 	public Huffman(){
-		nodes = new ArrayList<>();
+		nodes = new PriorityQueue();
 	}
 	
-	public void read(String fileName) throws FileNotFoundException{
+	public ArrayList<Node> read(String fileName) throws FileNotFoundException{
+		ArrayList<Node> nodes = new ArrayList<>();
 		Scanner fileScanner = new Scanner(new FileReader(fileName));
 		
 		while(fileScanner.hasNextLine()){
 			String s = fileScanner.nextLine();
 			for (int i=0; i<s.length(); i++){
 				System.out.println("Dodajê: " + s.charAt(i));
-				insert(s.charAt(i));
+				insert(s.charAt(i), nodes);
 			}
 		}
 		fileScanner.close();
 		
 		System.out.println(nodes);
+		return nodes;
 	}
 	
-	private Node search(char c){
+	private Node search(char c, ArrayList<Node> arr){
 		int i = 0;
-		while(i < nodes.size() && nodes.get(i).getSym() != c){
+		while(i < arr.size() && arr.get(i).getSym() != c){
 			i++;
 		}
-		return i != nodes.size()? nodes.get(i): null;
+		return i != arr.size()? arr.get(i): null;
 	}
 	
-	private void insert(char c){
+	private void insert(char c, ArrayList<Node> arr){
 //		if (c == ' ') c = '_';
-		if (search(c) != null){
+		if (search(c, arr) != null){
 			System.out.println("ten znak wystepuje " + c);
-			search(c).addFreq();
+			search(c, arr).addFreq();
 		}
 		else{
 			System.out.println("tworze nowy wezele " + c);
-			nodes.add(new Node(1, c));
+			arr.add(new Node(1, c));
 		}
 	}
 	
-	public PriorityQueue<Node> addToPriority(){
-		PriorityQueue<Node> queue = new PriorityQueue<>();
-		for (int i=0; i < nodes.size(); i++){
+	public void addToPriority(ArrayList<Node> arr){
+		for (int i=0; i < arr.size(); i++){
 //			System.out.println("Po " + i + "dodaniu");
-			Node n = nodes.get(i);
-			n.setNum(i);
-			queue.add(n);
+			Node n = arr.get(i);
+//			n.setNum(i);
+			nodes.insert(n);
 //			System.out.println("--------------------");
 		}
-		return queue;
+		nodes.displayQ();
 	}
 	
-	public Node createHuffmanTree(PriorityQueue<Node> q){
-		int i = 1;
-		while (q.size() > 1){
-			Node temp1 = q.poll();
-			Node temp2 = q.poll();
+	public Node createHuffmanTree(){
+//		int i = 1;
+		while (nodes.size > 1){
+			Node temp1 = nodes.poll();
+			Node temp2 = nodes.poll();
 			int sum = temp1.sum() + temp2.sum();
 			Node temp = new Node(sum, temp1, temp2);
-			temp.setNum(i);
-			q.add(temp);
+//			temp.setNum(i);
+			nodes.insert(temp);
 			System.out.println("Po dodaniu");
-			q = displayQ(q);
+			nodes.displayQ();
 			System.out.println("--------------------");
-			i++;
+//			i++;
 		}
-		return q.poll();
+		return nodes.poll();
 	}
-	
-//	public void decode(Node n, char k){
-//		StringBuffer code = new StringBuffer();
-//		if(n != null){
-//			if (k =='l') code.append("0");
-//			else if (k == 'r') code.append("1");
-//			decode(n.left, 'l');
-//			decode(n.right, 'r');
-//			if (n.left == null && n.right == null){
-//				System.out.println(n.toString()+ "kod: "+ code);
-//			}
-//		}
-//	}
 
 	public void display(Node n, String b){
 		if (n.left == null){
@@ -102,23 +88,15 @@ public class Huffman {
 		}
 	}
 	
-	public PriorityQueue<Node> displayQ(PriorityQueue<Node> q){
-		PriorityQueue<Node> queue = new PriorityQueue<>();
-		while (!q.isEmpty()){
-			Node temp = q.poll();
-			System.out.println(temp.toString());
-			queue.add(temp);
-		}
-		return queue;
-	}
 	
-	public PriorityQueue<Node> changeNumTo0(PriorityQueue<Node> q){
-		Iterator<Node> it = q.iterator();
-		while(it.hasNext()){
-			it.next().toZero();
-		}
-		return q;
-	}
+	
+//	public PriorityQueue changeNumTo0(PriorityQueue<Node> q){
+//		Iterator<Node> it = q.iterator();
+//		while(it.hasNext()){
+//			it.next().toZero();
+//		}
+//		return q;
+//	}
 	
 	
 //	public static Comparator<Node> freqComparator = new Comparator<Node>(){

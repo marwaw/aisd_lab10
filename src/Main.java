@@ -5,11 +5,8 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		Huffman h = new Huffman();
-		h.read("myText.txt");
-		h.displayQ(h.addToPriority());
-		
-		h.display(h.createHuffmanTree(h.changeNumTo0(h.addToPriority())), "");
-
+		h.addToPriority(h.read("myText.txt"));
+		h.display(h.createHuffmanTree(), "");
 		
 		
 //		System.out.println(h.search('a'));
