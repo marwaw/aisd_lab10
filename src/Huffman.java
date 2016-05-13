@@ -1,8 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Huffman {
@@ -39,7 +37,6 @@ public class Huffman {
 	}
 	
 	private void insert(char c, ArrayList<Node> arr){
-//		if (c == ' ') c = '_';
 		if (search(c, arr) != null){
 			System.out.println("ten znak wystepuje " + c);
 			search(c, arr).addFreq();
@@ -54,26 +51,22 @@ public class Huffman {
 		for (int i=0; i < arr.size(); i++){
 //			System.out.println("Po " + i + "dodaniu");
 			Node n = arr.get(i);
-//			n.setNum(i);
 			nodes.insert(n);
 //			System.out.println("--------------------");
 		}
-		nodes.displayQ();
+		nodes.display();
 	}
 	
 	public Node createHuffmanTree(){
-//		int i = 1;
 		while (nodes.size > 1){
 			Node temp1 = nodes.poll();
 			Node temp2 = nodes.poll();
 			int sum = temp1.sum() + temp2.sum();
 			Node temp = new Node(sum, temp1, temp2);
-//			temp.setNum(i);
 			nodes.insert(temp);
 			System.out.println("Po dodaniu");
-			nodes.displayQ();
+			nodes.display();
 			System.out.println("--------------------");
-//			i++;
 		}
 		return nodes.poll();
 	}
@@ -88,26 +81,9 @@ public class Huffman {
 		}
 	}
 	
-	
-	
-//	public PriorityQueue changeNumTo0(PriorityQueue<Node> q){
-//		Iterator<Node> it = q.iterator();
-//		while(it.hasNext()){
-//			it.next().toZero();
-//		}
-//		return q;
-//	}
-	
-	
-//	public static Comparator<Node> freqComparator = new Comparator<Node>(){
-//		@Override
-//		public int compare(Node arg0, Node arg1) {
-//			int com = 0;
-//			if (arg0.getFreq() > arg1.getFreq()) com = 1;
-//			else if (arg0.getFreq() < arg1.getFreq()) com = -1;
-//			else com = 0;
-//			return com;
-//		}
-//	};
+	//!!!!!
+	public String codeText(){
+		return null;
+	}
 
 }
